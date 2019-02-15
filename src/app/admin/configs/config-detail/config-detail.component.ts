@@ -3,10 +3,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-config',
-  templateUrl: './config.component.html',
-  styleUrls: ['./config.component.scss']
+  templateUrl: './config-detail.component.html',
+  styleUrls: ['./config-detail.component.scss']
 })
-export class ConfigComponent implements OnInit {
+export class ConfigDetailComponent implements OnInit {
   configForm = new FormGroup({
     timeInterval: new FormControl(''),
     password: new FormControl('')

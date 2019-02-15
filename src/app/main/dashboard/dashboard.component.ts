@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/auth';
 import { Network, DataSet, Options } from 'vis';
+import { SocketProviderService } from '../service/socket-provider.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +11,22 @@ import { Network, DataSet, Options } from 'vis';
 export class DashboardComponent implements OnInit {
   @ViewChild('network') networkElement: ElementRef;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private socketProviderService: SocketProviderService
+  ) {}
 
   ngOnInit() {
+    this.socketProviderService.initIoConnection();
+
+    const network = this.initOverviewNodes();
+  }
+
+  onSubmit() {
+    this.authService.logout().subscribe();
+  }
+
+  private initOverviewNodes() {
     const nodes = new DataSet([
       { id: 1, label: 'Node 1' },
       { id: 2, label: 'Node 2' },
@@ -53,14 +67,6 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    const network = new Network(
-      this.networkElement.nativeElement,
-      data,
-      options
-    );
-  }
-
-  onSubmit() {
-    this.authService.logout().subscribe();
+    return new Network(this.networkElement.nativeElement, data, options);
   }
 }

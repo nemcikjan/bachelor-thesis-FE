@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { getMainModule, getAdminModule } from '../config/lazy.functions';
+import {
+  provideLazyLoadedModule,
+  ModuleEnum
+} from '../shared/config/lazy.functions';
 import { AuthGuard } from '../auth';
 import { AuthModuleRouting } from '../auth/routes/auth.routing';
 
@@ -17,12 +20,12 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: getMainModule(),
+    loadChildren: provideLazyLoadedModule(ModuleEnum.MAIN_MODULE),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: getAdminModule(),
+    loadChildren: provideLazyLoadedModule(ModuleEnum.ADMIN_MODULE),
     canActivate: [AuthGuard]
   }
 ];
@@ -32,7 +35,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forRoot(routes, {
       // debug purposes
-      enableTracing: true,
+      // enableTracing: true,
       useHash: true
     })
   ],

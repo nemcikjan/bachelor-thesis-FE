@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { MainModuleRouting as MAIN_ROUTES } from './routes/main.routing';
-import { GatewayService } from './service/gateway.service';
+import { provideServices } from './service';
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [CommonModule, RouterModule.forChild(MAIN_ROUTES)],
-  providers: [GatewayService]
+  providers: [...provideServices()]
 })
 export class MainModule {}

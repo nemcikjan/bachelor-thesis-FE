@@ -1,4 +1,21 @@
 import { Routes } from '@angular/router';
-import { ConfigRouting as CONFIG_ROUTES } from './config.routing';
+import {
+  provideLazyLoadedModule,
+  ModuleEnum
+} from 'src/app/shared/config/lazy.functions';
+import { AdminLandingPageComponent } from '../admin-landing-page/admin-landing-page.component';
 
-export const AdminModuleRouting: Routes = [...CONFIG_ROUTES];
+export const AdminModuleRouting: Routes = [
+  {
+    path: 'configs',
+    loadChildren: provideLazyLoadedModule(ModuleEnum.CONFIGS_MODULE)
+  },
+  {
+    path: '',
+    component: AdminLandingPageComponent
+  },
+  {
+    path: 'settings',
+    loadChildren: provideLazyLoadedModule(ModuleEnum.SETTINGS_MODULE)
+  }
+];
