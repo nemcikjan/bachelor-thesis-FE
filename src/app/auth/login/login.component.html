@@ -1,0 +1,29 @@
+<p>
+  login works!
+</p>
+
+<div class="row justify-content-center ">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="col-3">
+    <div class="row">
+      <mat-form-field class="col">
+        <input matInput formControlName="name" placeholder="Name" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col">
+        <input
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'"
+        />
+        <mat-icon matSuffix (click)="hide = !hide">{{
+          hide ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
+      </mat-form-field>
+    </div>
+    <div>
+      <button type="submit">Login</button>
+    </div>
+  </form>
+</div>
