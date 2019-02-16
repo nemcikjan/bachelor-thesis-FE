@@ -1,14 +1,12 @@
 import { Routes } from '@angular/router';
-import {
-  provideLazyLoadedModule,
-  ModuleEnum
-} from 'src/app/shared/config/lazy.functions';
 import { AdminLandingPageComponent } from '../admin-landing-page/admin-landing-page.component';
+import { provideConfigsModule } from '../configs/configs.module';
+import { provideSettingsModule } from '../settings/settings.module';
 
 export const AdminModuleRouting: Routes = [
   {
     path: 'configs',
-    loadChildren: provideLazyLoadedModule(ModuleEnum.CONFIGS_MODULE)
+    loadChildren: provideConfigsModule()
   },
   {
     path: '',
@@ -16,6 +14,6 @@ export const AdminModuleRouting: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: provideLazyLoadedModule(ModuleEnum.SETTINGS_MODULE)
+    loadChildren: provideSettingsModule()
   }
 ];

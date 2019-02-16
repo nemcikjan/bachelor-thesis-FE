@@ -9,3 +9,9 @@ import { SettingsModuleRouting as SETTINGS_ROUTES } from './settings.routing';
   imports: [CommonModule, RouterModule.forChild(SETTINGS_ROUTES)]
 })
 export class SettingsModule {}
+
+export function provideSettingsModule() {
+  return async function() {
+    return await SettingsModule;
+  };
+}

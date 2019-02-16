@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { MainModuleRouting as MAIN_ROUTES } from './routes/main.routing';
 import { provideServices } from './service';
 
@@ -11,3 +11,9 @@ import { provideServices } from './service';
   providers: [...provideServices()]
 })
 export class MainModule {}
+
+export function provideMainModule(): LoadChildrenCallback {
+  return async function() {
+    return await MainModule;
+  };
+}

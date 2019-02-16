@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { AdminModuleRouting as ADMIN_ROUTES } from './routes/admin.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
@@ -15,3 +15,9 @@ import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-pa
   ]
 })
 export class AdminModule {}
+
+export function provideAdminModule(): LoadChildrenCallback {
+  return async function() {
+    return await AdminModule;
+  };
+}

@@ -11,3 +11,9 @@ import { ConfigsModuleRouting as CONFIGS_ROUTES } from './configs.routing';
   providers: [ConfigsService]
 })
 export class ConfigsModule {}
+
+export function provideConfigsModule() {
+  return async function() {
+    return await ConfigsModule;
+  };
+}

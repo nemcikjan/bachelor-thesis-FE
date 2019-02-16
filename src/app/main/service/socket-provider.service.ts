@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { GatewayService } from './gateway.service';
 import { SocketEvent } from '../interfaces/enum/socket.enum';
-import { mergeMap, takeUntil, take } from 'rxjs/operators';
-import { of, BehaviorSubject } from 'rxjs';
+import { mergeMap, takeUntil, take, tap } from 'rxjs/operators';
+import { of, BehaviorSubject, Subject, Observable } from 'rxjs';
 
 /**
  * Provides operations over gateway socket stream
  */
 @Injectable()
 export class SocketProviderService {
-  private isConnected$: BehaviorSubject<any>;
   /**
    * @param gatewayService GatewayService
    */
@@ -19,32 +18,28 @@ export class SocketProviderService {
    * Initialize connection on websocket on resolves needed subscriptions
    */
   public initIoConnection(): void {
-    this.gatewayService.initSocket();
-
     this.gatewayService
       .onEvent(SocketEvent.CONNECT)
       .pipe(take(1))
       .subscribe(() => {
         console.log('connected');
-        this.isConnected$ = new BehaviorSubject<any>({});
+        this.gatewayService
+          .onMessage('update_data')
+          // sending data to store
+          .pipe(
+            mergeMap(message => of(message)),
+            takeUntil(this.isDisconnected())
+          )
+          .subscribe(console.log);
       });
+  }
 
-    this.gatewayService
-      .onEvent(SocketEvent.DISCONNECT)
-      .pipe(take(1))
-      .subscribe(() => {
+  public isDisconnected(): Observable<any> {
+    return this.gatewayService.onEvent(SocketEvent.DISCONNECT).pipe(
+      tap(() => {
         console.log('disconnected');
-        this.isConnected$.next({});
-        this.isConnected$.complete();
-      });
-
-    this.gatewayService
-      .onMessage()
-      // sending data to store
-      .pipe(
-        mergeMap(message => of(message)),
-        takeUntil(this.isConnected$)
-      )
-      .subscribe();
+      }),
+      take(1)
+    );
   }
 }

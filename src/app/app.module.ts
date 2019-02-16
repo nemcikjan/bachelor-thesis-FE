@@ -14,6 +14,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AppState } from './store/app.state';
 import { ResponseTransformInterceptor } from './config/response-transform.interceptor';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
 
 const ngxsModules: ModuleWithProviders[] = [
   NgxsModule.forRoot([AppState]),
@@ -24,6 +27,7 @@ const ngxsModules: ModuleWithProviders[] = [
   })
 ];
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -32,6 +36,7 @@ const ngxsModules: ModuleWithProviders[] = [
     AppRoutingModule,
     HttpClientModule,
     AuthModule,
+    SocketIoModule.forRoot(config),
 
     ...ngxsModules
   ],
