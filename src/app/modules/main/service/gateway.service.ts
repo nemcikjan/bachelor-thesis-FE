@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SocketEvent } from '../interfaces/enum/socket.enum';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
@@ -23,10 +23,12 @@ export class GatewayService {
    * Receives messages from websocket
    */
   public onMessage(messageIdentity: string): Observable<any> {
-    console.log('debug', messageIdentity)
-    return this.socket.fromEvent(messageIdentity).pipe(map(data => {
-      console.log(data)
-      return data}));
+    return this.socket.fromEvent(messageIdentity).pipe(
+      map(data => {
+        console.log(data);
+        return data;
+      })
+    );
   }
 
   /**
@@ -35,5 +37,9 @@ export class GatewayService {
    */
   public onEvent(event: SocketEvent): Observable<any> {
     return this.socket.fromEvent(event);
+  }
+
+  public closeConnection() {
+    this.socket.disconnect();
   }
 }

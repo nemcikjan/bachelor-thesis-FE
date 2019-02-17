@@ -4,7 +4,7 @@ import { AuthState } from './store/auth.state';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AuthModuleRouting as AUTH_ROUTES } from './routes/auth.routing';
-import { MaterialModule } from '../modules/material.module';
+import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { CommonModule } from '@angular/common';

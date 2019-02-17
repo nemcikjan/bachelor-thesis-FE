@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from 'src/app/auth';
+import { AuthService } from '../../auth';
 import { Network, DataSet, Options } from 'vis';
 import { SocketProviderService } from '../service/socket-provider.service';
 

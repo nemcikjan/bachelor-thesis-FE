@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from '../auth';
+import { AuthService } from '../modules/auth';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           // auto logout if 401 response returned from api
           // this.authenticationService.logout();
           // location.reload(true);
-          console.log(err);
+          console.log('iferr', err);
           return throwError(err);
         } else {
           const error = err.error.message || err.statusText;

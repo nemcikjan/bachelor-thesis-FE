@@ -5,7 +5,7 @@ import { AppRoutingModule } from './modules/app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './config/error.interceptor';
-import { JwtInterceptor, AuthModule } from './auth';
+import { JwtInterceptor, AuthModule } from './modules/auth';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -26,7 +26,6 @@ const ngxsModules: ModuleWithProviders[] = [
     key: ['auth.token', 'auth.user']
   })
 ];
-
 
 @NgModule({
   declarations: [AppComponent],
