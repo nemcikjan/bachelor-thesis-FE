@@ -1,5 +1,10 @@
-Navigation
-<button (click)="navigate()">TEST</button>
-<button [routerLink]="['admin']">ADMIN</button>
-<button [routerLink]="['/']">DASHBOARD</button>
-<router-outlet></router-outlet>
+<div class="container h-100">
+  <nav class="nav">
+    <span class="align-middle">IoT bachelor thesis</span>
+
+    <a class="nav-link" [routerLink]="['/']">Dashboard</a>
+    <a class="nav-link" [routerLink]="['admin']">Administration</a>
+    <a class="nav-link" href="#" (click)="logout()">Logout</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

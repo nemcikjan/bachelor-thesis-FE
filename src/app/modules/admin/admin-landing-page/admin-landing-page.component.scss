@@ -1,0 +1,16 @@
+@import '../../../../variables.scss';
+
+#configs-content {
+  height: calc(100vh - #{$header_height});
+}
+
+mat-icon {
+  height: $icon_size_tile;
+  width: $icon_size_tile;
+  padding: 50px 50px 10px 50px;
+}
+
+.tile-name {
+  font-size: 30px;
+  font-family: $default_font !important;
+}

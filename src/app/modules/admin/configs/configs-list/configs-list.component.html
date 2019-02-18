@@ -1,3 +1,9 @@
 <p>
   configs-list works!
 </p>
+<div *ngIf="!(typeConfigs | async)?.length">
+  Loading....
+</div>
+<div *ngIf="(typeConfigs | async)?.length">
+  {{ typeConfigs | async | json }}
+</div>

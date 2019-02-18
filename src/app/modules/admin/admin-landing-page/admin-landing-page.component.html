@@ -1,7 +1,26 @@
-<p>
-  admin-landing-page works!
-</p>
-
-<a [routerLink]="['settings']">SETTINGS</a>
-
-<a [routerLink]="['configs']">CONFIGS</a>
+<div id="configs-content" class="row justify-content-around align-items-center">
+  <div class="tile col-4 align-self-center">
+    <div class="row justify-content-center">
+      <mat-card routerLink="settings" class="col">
+        <div class="row justify-content-center">
+          <mat-icon svgIcon="settings"></mat-icon>
+        </div>
+        <div class="row justify-content-center">
+          <span class="tile-name">Settings</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="tile col-4 align-self-center">
+    <div class="row justify-content-center">
+      <mat-card routerLink="configs/overview" class="col">
+        <div class="row justify-content-center">
+          <mat-icon svgIcon="build"></mat-icon>
+        </div>
+        <div class="row justify-content-center">
+          <span class="tile-name">Config</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

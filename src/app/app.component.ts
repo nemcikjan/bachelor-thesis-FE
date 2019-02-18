@@ -1,3 +1,4 @@
+import { AuthService } from './modules/auth/service/auth.service';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +14,8 @@ export class AppComponent {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
   onClick() {
     this.http.get('api').subscribe(res => console.log(res));
@@ -26,5 +28,9 @@ export class AppComponent {
   navigateToConfig() {
     console.log('asdsd');
     this.router.navigate(['admin/config']);
+  }
+
+  logout() {
+    this.authService.logout().subscribe();
   }
 }

@@ -24,6 +24,7 @@ export class AuthGuard implements CanActivate {
     return this.authenticationService.checkTokenValidity().pipe(
       tap(isValid => {
         if (!isValid) {
+          console.log(stateSnapshot);
           return this.router.navigate(['auth/login'], {
             queryParams: { returnUrl: stateSnapshot.url }
           });

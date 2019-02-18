@@ -4,6 +4,7 @@ import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { AdminModuleRouting as ADMIN_ROUTES } from './routes/admin.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [AdminLandingPageComponent],
@@ -11,7 +12,8 @@ import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-pa
     CommonModule,
     RouterModule.forChild(ADMIN_ROUTES),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule
   ]
 })
 export class AdminModule {}

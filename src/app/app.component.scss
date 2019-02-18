@@ -1,0 +1,12 @@
+@import '../variables.scss';
+
+nav {
+  height: $header-height;
+}
+
+.nav {
+  span,
+  a {
+    align-self: center;
+  }
+}

@@ -5,9 +5,20 @@ import { ConfigDetailComponent } from './config-detail/config-detail.component';
 import { ConfigsListComponent } from './configs-list/configs-list.component';
 import { RouterModule } from '@angular/router';
 import { ConfigsModuleRouting as CONFIGS_ROUTES } from './configs.routing';
+import { ConfigsLandingComponent } from './configs-landing/configs-landing.component';
+import { MaterialModule } from '../../material.module';
+
 @NgModule({
-  declarations: [ConfigDetailComponent, ConfigsListComponent],
-  imports: [CommonModule, RouterModule.forChild(CONFIGS_ROUTES)],
+  declarations: [
+    ConfigDetailComponent,
+    ConfigsListComponent,
+    ConfigsLandingComponent
+  ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(CONFIGS_ROUTES),
+    MaterialModule
+  ],
   providers: [ConfigsService]
 })
 export class ConfigsModule {}

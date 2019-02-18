@@ -1,0 +1,38 @@
+<div id="configs-content" class="row justify-content-around align-items-center">
+  <div class="tile col-3 align-self-center">
+    <div class="row justify-content-center">
+      <mat-card (click)="navigateToChild('light')" class="col">
+        <div class="row justify-content-center">
+          <mat-icon svgIcon="light"></mat-icon>
+        </div>
+        <div class="row justify-content-center">
+          <span class="tile-name">Light</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="tile col-3 align-self-center">
+    <div class="row justify-content-center">
+      <mat-card (click)="navigateToChild('air')" class="col">
+        <div class="row justify-content-center">
+          <mat-icon svgIcon="wind"></mat-icon>
+        </div>
+        <div class="row justify-content-center">
+          <span class="tile-name">Air</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="tile col-3 align-self-center">
+    <div class="row justify-content-center">
+      <mat-card (click)="navigateToChild('motion')" class="col">
+        <div class="row justify-content-center">
+          <mat-icon svgIcon="running"></mat-icon>
+        </div>
+        <div class="row justify-content-center">
+          <span class="tile-name">Motion</span>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

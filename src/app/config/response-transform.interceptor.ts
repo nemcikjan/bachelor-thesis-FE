@@ -15,17 +15,12 @@ export class ResponseTransformInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(
-      map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          // change the response body here
-          return event.clone({
-            body: { ...event.body.data }
-          });
-        }
-
-        return event;
-      })
-    );
+    const matches = request.url.match(/.(svg|png|jpg|jpeg)$/gm);
+    if (!(matches && matches.length)) {
+      request = request.clone({
+        url: 'api/' + request.url
+      });
+    }
+    return next.handle(request);
   }
 }
