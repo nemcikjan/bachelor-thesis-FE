@@ -1,6 +1,18 @@
 language: node_js
 node_js:
   - 'lts/*'
+addons:
+ssh_known_hosts:
+  - deploy@104.248.18.71
+  - deploy@iot.itprof.sk
 stages:
   - compile
   - deploy
+compile:
+  - npm run build
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: bash deploy.sh
+  on:
+    branch: dev
