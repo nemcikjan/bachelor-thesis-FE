@@ -23,8 +23,4 @@ import { MaterialModule } from '../../material.module';
 })
 export class ConfigsModule {}
 
-export function provideConfigsModule() {
-  return async function() {
-    return await ConfigsModule;
-  };
-}
+export const provideConfigsModule = async () => await ConfigsModule;

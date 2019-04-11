@@ -7,7 +7,7 @@ import { provideSettingsModule } from '../settings/settings.module';
 export const AdminModuleRouting: Routes = [
   {
     path: 'configs',
-    loadChildren: provideConfigsModule(),
+    loadChildren: './configs/configs.module#ConfigsModule',
     canActivate: [AuthGuard]
   },
   {
@@ -16,7 +16,7 @@ export const AdminModuleRouting: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: provideSettingsModule(),
+    loadChildren: './settings/settings.module#SettingsModule',
     canActivate: [AuthGuard]
   }
 ];
