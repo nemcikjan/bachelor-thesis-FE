@@ -2,9 +2,9 @@ language: node_js
 node_js:
   - lts/*
 addons:
-ssh_known_hosts:
-  - deploy@104.248.18.71
-  - deploy@iot.itprof.sk
+  ssh_known_hosts:
+    - deploy@104.248.18.71
+    - deploy@iot.itprof.sk
 script: npm run build
 after_success:
   - openssl aes-256-cbc -K $encrypted_4293f3299e0a_key -iv $encrypted_4293f3299e0a_iv
