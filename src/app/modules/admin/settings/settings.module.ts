@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsOverviewComponent } from './settings-overview/settings-overview.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { SettingsModuleRouting as SETTINGS_ROUTES } from './settings.routing';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { SettingsModuleRouting as SETTINGS_ROUTES } from './settings.routing';
 })
 export class SettingsModule {}
 
-export function provideSettingsModule() {
+export function provideSettingsModule(): LoadChildrenCallback {
   return async function() {
     return await SettingsModule;
   };
