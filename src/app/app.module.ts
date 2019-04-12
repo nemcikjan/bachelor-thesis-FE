@@ -24,7 +24,7 @@ const config: SocketIoConfig = {
 };
 
 const ngxsModules: ModuleWithProviders[] = [
-  NgxsModule.forRoot([AppState]),
+  NgxsModule.forRoot([AppState], { developmentMode: !environment.production }),
   NgxsFormPluginModule.forRoot(),
   NgxsReduxDevtoolsPluginModule.forRoot(),
   NgxsStoragePluginModule.forRoot({
