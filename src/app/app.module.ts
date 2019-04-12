@@ -15,8 +15,13 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AppState } from './store/app.state';
 import { ResponseTransformInterceptor } from './config/response-transform.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
+const config: SocketIoConfig = {
+  url:
+    (environment.production && environment.baseUrl) || 'http://localhost:4000',
+  options: {}
+};
 
 const ngxsModules: ModuleWithProviders[] = [
   NgxsModule.forRoot([AppState]),

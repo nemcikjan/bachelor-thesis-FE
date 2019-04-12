@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ResponseTransformInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class ResponseTransformInterceptor implements HttpInterceptor {
     const matches = request.url.match(/.(svg|png|jpg|jpeg)$/gm);
     if (!(matches && matches.length)) {
       request = request.clone({
-        url: 'api/' + request.url
+        url: environment.baseUrl + 'api/' + request.url
       });
     }
     return next.handle(request);

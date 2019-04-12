@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'iot-backend.itprof.sk/api'
+  baseUrl: 'iot-backend.itprof.sk'
 };
