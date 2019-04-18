@@ -1,8 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { map, tap, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap, share, toArray, map } from 'rxjs/operators';
 import { ConfigsService } from '../configs.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-configs-list',
@@ -10,15 +11,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./configs-list.component.scss']
 })
 export class ConfigsListComponent implements OnInit {
+  form: FormGroup = new FormGroup({});
+  type: string;
   constructor(
     private route: ActivatedRoute,
     private configsService: ConfigsService
   ) {}
-  typeConfigs: Observable<any>;
+  typeConfigs: any[];
   ngOnInit() {
-    this.typeConfigs = this.route.queryParams.pipe(
-      mergeMap(({ type }) => this.configsService.getConfigsByType(type)),
-      tap(console.log)
-    );
+    this.type = this.route.snapshot.queryParams['type'];
+    this.configsService.getConfigsByType(this.type).subscribe(configs => {
+      this.typeConfigs = configs;
+    });
   }
+
+  addConfig() {}
 }

@@ -16,6 +16,7 @@ import { AppState } from './store/app.state';
 import { ResponseTransformInterceptor } from './config/response-transform.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { ToastrModule } from 'ngx-toastr';
 
 const config: SocketIoConfig = {
   url:
@@ -41,6 +42,7 @@ const ngxsModules: ModuleWithProviders[] = [
     HttpClientModule,
     AuthModule,
     SocketIoModule.forRoot(config),
+    ToastrModule.forRoot(),
 
     ...ngxsModules
   ],
