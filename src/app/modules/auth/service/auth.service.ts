@@ -7,6 +7,7 @@ import { Login, Logout } from '../store/auth.actions';
 import { AuthState } from '../store/auth.state';
 import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
     private httpClient: HttpClient,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   public login({ name, password }): Observable<any> {
@@ -29,6 +31,7 @@ export class AuthService {
       map(params => params['returnUrl'] || '/'),
       tap(url => {
         this.router.navigateByUrl(url);
+        this.toastr.success('Login successful');
       }),
       take(1)
     );

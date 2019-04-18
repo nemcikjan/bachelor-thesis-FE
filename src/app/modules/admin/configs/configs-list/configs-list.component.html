@@ -1,9 +1,66 @@
-<p>
-  configs-list works!
-</p>
-<div *ngIf="!(typeConfigs | async)?.length">
+<div class="row justify-content-center">
+  <button mat-raised-button (click)="addConfig()">Add config</button>
+</div>
+<ng-container *ngIf="!typeConfigs?.length; then loading; else data">
+</ng-container>
+
+<ng-template #loading>
   Loading....
-</div>
-<div *ngIf="(typeConfigs | async)?.length">
-  {{ typeConfigs | async | json }}
-</div>
+</ng-template>
+<ng-template #data>
+  {{ typeConfigs | json }}
+</ng-template>
+
+<mat-card *ngIf="add" class="row justify-content-center">
+  <form [formGroup]="form" (ngSubmit)="submitMethod()" class="col-8">
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-select formControlName="coffeeType" placeholder="Product type">
+          <mat-option disabled>{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- <div class="row">
+      <mat-form-field class="col">
+        <mat-select formControlName="coffee" placeholder="Product name">
+          <mat-option *ngFor="let c of coffees" [value]="c.id">{{
+            c.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-3">
+        <mat-form-field>
+          <input matInput placeholder="Amount" type="number" min="1" formControlName="quantity"
+            class="example-right-align" />
+          <span matSuffix>kg</span>
+        </mat-form-field>
+        <span>Price:
+          {{
+            (calculatedPrice$ | async) || 0 | currency: 'EUR':'symbol':'1.2-2'
+          }}</span>
+      </div>
+      <div class="col-5">
+        <mat-form-field>
+          <input class="example-right-align" matInput type="number" [min]="1" placeholder="Delivery interval"
+            formControlName="interval" />
+          <span matSuffix>in days</span>
+        </mat-form-field>
+        <mat-form-field hidden>
+          <input matInput [min]="now" [matDatepicker]="dp" [matDatepickerFilter]="dateFilter" [(ngModel)]="selectedDate"
+            [ngModelOptions]="{ standalone: true }" (ngModelChange)="onDateChange($event)" />
+          <mat-datepicker touchUi #dp></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button (click)="openDp($event)">
+          Choose next delivery date
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <button [disabled]="form.invalid" mat-raised-button type="submit">
+        Add
+      </button>
+    </div> -->
+  </form>
+</mat-card>

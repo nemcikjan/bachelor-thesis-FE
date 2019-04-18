@@ -7,6 +7,7 @@ import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { ConfigsModuleRouting as CONFIGS_ROUTES } from './configs.routing';
 import { ConfigsLandingComponent } from './configs-landing/configs-landing.component';
 import { MaterialModule } from '../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { MaterialModule } from '../../material.module';
   imports: [
     CommonModule,
     RouterModule.forChild(CONFIGS_ROUTES),
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ConfigsService]
 })
