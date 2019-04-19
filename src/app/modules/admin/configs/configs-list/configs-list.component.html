@@ -1,24 +1,57 @@
 <div class="row justify-content-center">
-  <button mat-raised-button (click)="addConfig()">Add config</button>
+  <div class="col-2">
+    <button mat-raised-button (click)="add = !add">Add config</button>
+  </div>
+
+  <div class="col-2">
+    <button mat-raised-button (click)="addNode()">Add node</button>
+  </div>
 </div>
-<ng-container *ngIf="!typeConfigs?.length; then loading; else data">
-</ng-container>
+<ng-container *ngIf="!configs?.length; then loading; else data"> </ng-container>
 
 <ng-template #loading>
   Loading....
 </ng-template>
 <ng-template #data>
-  {{ typeConfigs | json }}
+  {{ configs | json }}
 </ng-template>
 
 <mat-card *ngIf="add" class="row justify-content-center">
   <form [formGroup]="form" (ngSubmit)="submitMethod()" class="col-8">
-    <div class="row">
-      <mat-form-field class="col">
-        <mat-select formControlName="coffeeType" placeholder="Product type">
-          <mat-option disabled>{{ type }}</mat-option>
+    <div class="row justify-content-center">
+      <mat-form-field class="col-8">
+        <mat-select formControlName="nodeId" placeholder="Node ID">
+          <mat-option *ngFor="let c of nodes" [value]="c.nodeId">{{
+            c.id
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field class="col-8">
+        <mat-select formControlName="nodeType" placeholder="Node type">
+          <mat-option [value]="type">{{ type | uppercase }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="col-8">
+        <div class="row">
+          <span class="col-2 align-middle">Interval: </span>
+          <div class="col-6">
+            <div class="row">
+              <ngb-timepicker
+                class="col-7"
+                value
+                formControlName="interval"
+                [spinners]="false"
+              ></ngb-timepicker>
+              <span class="col-3">MM:SS</span>
+            </div>
+          </div>
+          <div class="col-2">
+            <button mat-raised-button (click)="addConfig()">
+              Confirm config
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- <div class="row">
       <mat-form-field class="col">
