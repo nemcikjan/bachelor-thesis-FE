@@ -11,19 +11,44 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./configs-list.component.scss']
 })
 export class ConfigsListComponent implements OnInit {
-  form: FormGroup = new FormGroup({});
+  form: FormGroup;
   type: string;
+  add = false;
   constructor(
     private route: ActivatedRoute,
     private configsService: ConfigsService
   ) {}
-  typeConfigs: any[];
+  configs: any[];
+  nodes: any[];
   ngOnInit() {
     this.type = this.route.snapshot.queryParams['type'];
-    this.configsService.getConfigsByType(this.type).subscribe(configs => {
-      this.typeConfigs = configs;
+    this.form = new FormGroup({
+      nodeType: new FormControl({ value: this.type, disabled: true }, [
+        Validators.required
+      ]),
+      interval: new FormControl({ hour: 0, minute: 1 }, [Validators.required]),
+      nodeId: new FormControl(null, [Validators.required])
     });
+    this.configsService
+      .getConfigsListData(this.type)
+      .subscribe(({ configs, nodes }) => {
+        this.configs = configs;
+        this.nodes = nodes;
+      });
   }
 
-  addConfig() {}
+  addConfig() {
+    const { interval, ...rest } = this.form.value;
+    const c = val => (val < 10 ? '0' + val : '' + val);
+    const value = {
+      ...rest,
+      nodeType: this.type,
+      interval: `${c(interval.hour)}-${c(interval.minute)}`
+    };
+    this.configsService.insertConfig(value).subscribe();
+  }
+
+  addNode() {}
+
+  submitMethod() {}
 }
