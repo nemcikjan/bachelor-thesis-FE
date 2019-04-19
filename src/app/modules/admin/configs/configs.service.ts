@@ -43,4 +43,13 @@ export class ConfigsService {
       take(1)
     );
   }
+
+  insertNode(node) {
+    return this.httpClient.post<any>('nodes', node).pipe(
+      tap(res =>
+        this.toastr.success('Node was successfully created', 'Node created')
+      ),
+      take(1)
+    );
+  }
 }

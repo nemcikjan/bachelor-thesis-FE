@@ -5,7 +5,6 @@ import { AdminModuleRouting as ADMIN_ROUTES } from './routes/admin.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
 import { MaterialModule } from '../material.module';
-
 @NgModule({
   declarations: [AdminLandingPageComponent],
   imports: [
