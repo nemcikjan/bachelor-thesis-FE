@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -16,7 +16,9 @@ import { AppState } from './store/app.state';
 import { ResponseTransformInterceptor } from './config/response-transform.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService, Overlay } from 'ngx-toastr';
+import { SocketProviderService } from './modules/main/service/socket-provider.service';
+import { CustomToastService } from './modules/main/service/toast.service';
 
 const config: SocketIoConfig = {
   url:
@@ -47,13 +49,20 @@ const ngxsModules: ModuleWithProviders[] = [
     ...ngxsModules
   ],
   providers: [
+    SocketProviderService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ResponseTransformInterceptor,
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (sp: SocketProviderService) => () => sp.initIoConnection(),
+      deps: [SocketProviderService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

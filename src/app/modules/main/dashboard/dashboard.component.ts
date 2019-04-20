@@ -11,14 +11,9 @@ import { SocketProviderService } from '../service/socket-provider.service';
 export class DashboardComponent implements OnInit {
   @ViewChild('network') networkElement: ElementRef;
 
-  constructor(
-    private authService: AuthService,
-    private socketProviderService: SocketProviderService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.socketProviderService.initIoConnection();
-
     const network = this.initOverviewNodes();
   }
 
