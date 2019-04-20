@@ -18,7 +18,6 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { ToastrModule, ToastrService, Overlay } from 'ngx-toastr';
 import { SocketProviderService } from './modules/main/service/socket-provider.service';
-import { CustomToastService } from './modules/main/service/toast.service';
 
 const config: SocketIoConfig = {
   url:
