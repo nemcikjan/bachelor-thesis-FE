@@ -101,7 +101,7 @@ export class ConfigsListComponent implements OnInit, OnDestroy {
       nodeType: new FormControl({ value: this.type, disabled: true }, [
         Validators.required
       ]),
-      interval: new FormControl(null, [Validators.required, Validators.min(1)]),
+      interval: new FormControl(1, [Validators.required, Validators.min(1)]),
       nodeId: new FormControl(null, [Validators.required])
     });
 
