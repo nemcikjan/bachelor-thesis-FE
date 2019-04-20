@@ -7,9 +7,15 @@ import { map } from 'rxjs/operators';
 /**
  * Communicates directly with websocket
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GatewayService {
   constructor(private socket: Socket) {}
+
+  init() {
+    this.socket.fromEvent('server_error').subscribe(cc => console.error(cc));
+  }
 
   /**
    * Send message vie websocket
@@ -35,7 +41,7 @@ export class GatewayService {
    * Subscribes to websocket events
    * @param event SocketEvent
    */
-  public onEvent(event: SocketEvent): Observable<any> {
+  public onEvent(event: SocketEvent | string): Observable<any> {
     return this.socket.fromEvent(event);
   }
 

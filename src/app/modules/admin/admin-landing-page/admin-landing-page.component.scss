@@ -14,3 +14,6 @@ mat-icon {
   font-size: 30px;
   font-family: $default_font !important;
 }
+#settings * {
+  cursor: not-allowed;
+}
