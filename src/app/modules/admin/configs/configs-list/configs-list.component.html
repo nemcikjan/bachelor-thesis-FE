@@ -31,22 +31,27 @@
         </mat-select>
       </mat-form-field>
       <div class="col-8">
-        <div class="row">
-          <span class="col-2 align-middle">Interval: </span>
-          <div class="col-6">
+        <div class="row justify-content-between">
+          <mat-form-field class="col-4">
+            <input
+              matInput
+              placeholder="Interval"
+              type="number"
+              formControlName="interval"
+              class="example-right-align"
+            />
+            <span matSuffix>seconds</span>
+          </mat-form-field>
+          <div class="col-4">
             <div class="row">
-              <ngb-timepicker
-                class="col-7"
-                formControlName="interval"
-                [spinners]="false"
-              ></ngb-timepicker>
-              <span class="col-3">MM:SS</span>
+              <button
+                class="col align-self-center"
+                mat-raised-button
+                type="submit"
+              >
+                Confirm config
+              </button>
             </div>
-          </div>
-          <div class="col-2">
-            <button mat-raised-button type="submit">
-              Confirm config
-            </button>
           </div>
         </div>
       </div>
@@ -114,7 +119,7 @@
       </ng-container>
       <ng-container matColumnDef="interval">
         <th mat-header-cell *matHeaderCellDef class="text-center">
-          Inteval (MM-SS)
+          Inteval (in seconds)
         </th>
         <td mat-cell *matCellDef="let element" class="text-center">
           {{ element.interval }}

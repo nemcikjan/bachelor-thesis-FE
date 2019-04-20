@@ -2,6 +2,7 @@ import { AuthService } from './modules/auth/service/auth.service';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GatewayService } from './modules/main/service/gateway.service';
 
 @Component({
   selector: 'app-root',

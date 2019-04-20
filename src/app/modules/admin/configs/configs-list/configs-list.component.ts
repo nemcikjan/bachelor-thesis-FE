@@ -40,7 +40,6 @@ const nodeFormInit = type => ({
 });
 
 const confFormInit = type => ({
-  interval: { hour: 0, minute: 0 },
   nodeType: { value: type, disabled: true }
 });
 
@@ -88,7 +87,7 @@ export class ConfigsListComponent implements OnInit {
       nodeType: new FormControl({ value: this.type, disabled: true }, [
         Validators.required
       ]),
-      interval: new FormControl({ hour: 0, minute: 0 }, [Validators.required]),
+      interval: new FormControl(null, [Validators.required, Validators.min(1)]),
       nodeId: new FormControl(null, [Validators.required])
     });
 
@@ -114,14 +113,9 @@ export class ConfigsListComponent implements OnInit {
   }
 
   addConfig() {
-    const { interval, nodeId } = this.configForm.value;
-    const transformInterval = val => (val < 10 ? '0' + val : '' + val);
     const value = {
-      nodeId,
       nodeType: this.type,
-      interval: `${transformInterval(interval.hour)}-${transformInterval(
-        interval.minute
-      )}`
+      ...this.configForm.value
     };
     this.configsService.insertConfig(value).subscribe({
       next: () => {
