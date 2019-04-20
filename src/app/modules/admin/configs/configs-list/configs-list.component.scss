@@ -20,7 +20,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-detail {
   overflow: hidden;
-  display: flex;
 }
 
 .example-element-diagram {
@@ -52,4 +51,15 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 table:hover {
   cursor: pointer;
+}
+
+table {
+  width: 100%;
+}
+
+#history-table {
+  cursor: default !important;
+  i {
+    cursor: pointer;
+  }
 }

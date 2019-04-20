@@ -32,7 +32,8 @@ export class ConfigsService {
 
   getConfigsListData(type: string) {
     return zip(this.getAllNodes(type), this.getConfigsByType(type)).pipe(
-      map(([nodes, configs]) => ({ nodes, configs }))
+      map(([nodes, configs]) => ({ nodes, configs })),
+      take(1)
     );
   }
 
@@ -57,6 +58,15 @@ export class ConfigsService {
   getNodeConfigs(objectId: string) {
     return this.httpClient.get(`config/${objectId}`).pipe(
       transformResponse(),
+      take(1)
+    );
+  }
+
+  updateCurrentConfig(objectId: string) {
+    return this.httpClient.patch(`config/patch/${objectId}`, {}).pipe(
+      tap(() =>
+        this.toastr.success('Config was successfully updated', 'Config updated')
+      ),
       take(1)
     );
   }
