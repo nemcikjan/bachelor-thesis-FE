@@ -142,25 +142,140 @@
           [attr.colspan]="displayedColumns.length"
         >
           <div
-            class="example-element-detail"
+            class="example-element-detail mt-2 mb2"
             [@detailExpand]="
               element == expandedElement ? 'expanded' : 'collapsed'
             "
           >
             <ng-container
               *ngIf="
-                expandedElementHistory?.length;
+                expandedElementHistory?.data?.length;
                 then history;
                 else noHistory
               "
             ></ng-container>
             <ng-template #history>
-              <ng-container *ngFor="let h of expandedElementHistory">
-                {{ h | json }}
-              </ng-container>
+              <div class="row">
+                <div class="mat-elevation-z8 col">
+                  <table
+                    id="history-table"
+                    mat-table
+                    [dataSource]="expandedElementHistory"
+                  >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="nodeId">
+                      <th mat-header-cell *matHeaderCellDef>
+                        Node ID
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.nodeId }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nodeType">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">
+                        Node type
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="text-center"
+                      >
+                        {{ element.nodeType | uppercase }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="interval">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">
+                        Interval
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="text-center"
+                      >
+                        {{ element.interval }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="createdAt">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">
+                        Created at
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="text-center"
+                      >
+                        {{ element.createdAt | date }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">
+                        Actions
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        class="text-center"
+                      >
+                        <i
+                          class="material-icons"
+                          (click)="useConfig(element.id)"
+                        >
+                          launch
+                        </i>
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="[
+                        'nodeId',
+                        'nodeType',
+                        'interval',
+                        'createdAt',
+                        'actions'
+                      ]"
+                    ></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: [
+                          'nodeId',
+                          'nodeType',
+                          'interval',
+                          'createdAt',
+                          'actions'
+                        ]
+                      "
+                    ></tr>
+                  </table>
+                </div>
+              </div>
             </ng-template>
             <ng-template #noHistory>
-              This element has only one configuration created yet.
+              <ng-container *ngIf="!expandedElementHistory?.data?.length">
+                <div class="row justify-content-center text-center mb-2 mt-2">
+                  <div *ngIf="showHistorySpinner; else empty" class="col-2">
+                    <mat-progress-spinner
+                      class="example-margin"
+                      color="primary"
+                      mode="indeterminate"
+                    >
+                    </mat-progress-spinner>
+                  </div>
+                  <ng-template #empty>
+                    <div class="row justify-content-center mt-2 mb-2">
+                      This element has only one configuration created yet.
+                    </div>
+                  </ng-template>
+                </div>
+              </ng-container>
             </ng-template>
           </div>
         </td>

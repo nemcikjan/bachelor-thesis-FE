@@ -1,5 +1,15 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewContainerRef,
+  ViewChildren,
+  QueryList,
+  OnDestroy
+} from '@angular/core';
 import {
   tap,
   mergeMap,
@@ -7,7 +17,8 @@ import {
   toArray,
   map,
   startWith,
-  filter
+  filter,
+  takeUntil
 } from 'rxjs/operators';
 import { ConfigsService } from '../configs.service';
 import { Observable, of, Subject } from 'rxjs';
@@ -22,6 +33,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 const macAddrCharRegex = /[a-fA-F0-9]/;
 const maskConfig: TextMaskConfig = {
   mask: [
@@ -61,7 +73,7 @@ const confFormInit = type => ({
     ])
   ]
 })
-export class ConfigsListComponent implements OnInit {
+export class ConfigsListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['nodeId', 'nodeType', 'interval', 'createdAt'];
   configForm: FormGroup;
   nodeForm: FormGroup;
@@ -72,9 +84,11 @@ export class ConfigsListComponent implements OnInit {
   nodes: any[];
   textMask = maskConfig;
   expandedElement: ConfigItem | null;
-  expandedElementHistory: ConfigItem[] = [];
+  expandedElementHistory = new MatTableDataSource<ConfigItem>([]);
+  showHistorySpinner = true;
   private changeSubject = new Subject();
   private changeSubject$ = this.changeSubject.asObservable();
+  private destroySubject$ = new Subject();
 
   constructor(
     private route: ActivatedRoute,
@@ -106,7 +120,10 @@ export class ConfigsListComponent implements OnInit {
       });
 
     this.changeSubject$
-      .pipe(mergeMap(() => this.configsService.getConfigsByType(this.type)))
+      .pipe(
+        mergeMap(() => this.configsService.getConfigsByType(this.type)),
+        takeUntil(this.destroySubject$)
+      )
       .subscribe({
         next: configs => (this.configs = configs)
       });
@@ -141,22 +158,37 @@ export class ConfigsListComponent implements OnInit {
   }
 
   expandedElementChange() {
+    this.expandedElementHistory.data = [];
     of(this.expandedElement)
       .pipe(
         tap(e => {
           if (!!!e) {
-            this.expandedElementHistory = [];
+            this.expandedElementHistory.data = [];
           }
         }),
         filter(elem => !!elem),
+        tap(() => (this.showHistorySpinner = true)),
         map(e => this.nodes.find(n => n.nodeId === e.nodeId).id as string),
-        mergeMap(e => this.configsService.getNodeConfigs(e))
+        mergeMap(e => this.configsService.getNodeConfigs(e)),
+        takeUntil(this.destroySubject$)
       )
-      .subscribe(
-        res =>
-          (this.expandedElementHistory = res.filter(
-            e => !!Object.keys(e).length
-          ))
-      );
+      .subscribe(res => {
+        res = res.filter(e => !!Object.keys(e).length);
+        this.expandedElementHistory.data = res;
+        this.showHistorySpinner = false;
+      });
+  }
+
+  useConfig(objectId: string) {
+    this.configsService.updateCurrentConfig(objectId).subscribe({
+      next: () => this.changeSubject.next()
+    });
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.destroySubject$.next();
+    this.destroySubject$.unsubscribe();
   }
 }
