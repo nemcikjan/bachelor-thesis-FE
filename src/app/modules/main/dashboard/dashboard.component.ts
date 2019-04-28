@@ -15,7 +15,7 @@ import { SetData } from 'src/app/store/app.actions';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  displayedColumns: string[] = ['nodeId', 'type', 'value'];
   @ViewChild('network') networkElement: ElementRef;
   @Select(AppState.data$) data$: Observable<NodeData[]>;
   selectedNodeData: NodeData;
