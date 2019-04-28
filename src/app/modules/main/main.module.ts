@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, LoadChildrenCallback } from '@angular/router';
 import { MainModuleRouting as MAIN_ROUTES } from './routes/main.routing';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [CommonModule, RouterModule.forChild(MAIN_ROUTES)]
+  imports: [CommonModule, RouterModule.forChild(MAIN_ROUTES), MaterialModule]
 })
 export class MainModule {}
 

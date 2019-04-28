@@ -25,12 +25,12 @@ export class AppState {
     { setState, getState }: StateContext<AppStateModel>,
     { payload }: PatchData
   ) {
-    const { nodeId, ...rest } = payload;
+    // const { nodeId, ...rest } = payload;
     const state = getState().data;
-    const updated = _.chain(state)
-      .find({ nodeId: nodeId })
-      .merge({ ...rest }) as any;
-    return setState(updated);
+    // const updated = _.chain(state)
+    //   .find({ nodeId: nodeId })
+    //   .merge({ ...rest }) as any;
+    return setState({ data: [payload] });
   }
 
   @Action(SetData)

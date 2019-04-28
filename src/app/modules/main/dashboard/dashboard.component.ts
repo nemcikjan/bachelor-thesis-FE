@@ -15,7 +15,7 @@ import { SetData } from 'src/app/store/app.actions';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  displayedColumns: string[] = ['nodeId', 'type', 'value'];
+  displayedColumns: string[] = ['nodeId', 'type', 'timestamp', 'value'];
   @ViewChild('network') networkElement: ElementRef;
   @Select(AppState.data$) data$: Observable<NodeData[]>;
   selectedNodeData: NodeData;
@@ -28,10 +28,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     // initial data load
-    this.appService
-      .getData()
-      .pipe(mergeMap(data => this.store.dispatch(new SetData(data))))
-      .subscribe();
+    // this.appService
+    //   .getData()
+    //   .pipe(mergeMap(data => this.store.dispatch(new SetData(data))))
+    //   .subscribe();
     const network = this.initOverviewNodes();
   }
 

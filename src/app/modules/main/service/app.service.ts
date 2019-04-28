@@ -10,6 +10,6 @@ export class AppService {
   constructor(private httpClient: HttpClient) {}
 
   getData() {
-    return this.httpClient.get<NodeData[]>('').pipe(take(1));
+    return this.httpClient.get<NodeData[]>('data').pipe(take(1));
   }
 }
