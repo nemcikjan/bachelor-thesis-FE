@@ -1,3 +1,8 @@
 export interface AppStateModel {
-  b?: any;
+  data: NodeData[];
+}
+
+export interface NodeData {
+  nodeId: string;
+  [key: string]: any;
 }

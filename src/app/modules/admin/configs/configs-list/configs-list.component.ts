@@ -1,27 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-  ElementRef,
-  ViewContainerRef,
-  ViewChildren,
-  QueryList,
-  OnDestroy
-} from '@angular/core';
-import {
-  tap,
-  mergeMap,
-  share,
-  toArray,
-  map,
-  startWith,
-  filter,
-  takeUntil
-} from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { tap, mergeMap, map, filter, takeUntil } from 'rxjs/operators';
 import { ConfigsService } from '../configs.service';
-import { Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfigItem } from '../../interfaces/configs.interface';
 import { TextMaskConfig } from 'angular2-text-mask';
@@ -33,7 +14,7 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 const macAddrCharRegex = /[a-fA-F0-9]/;
 const maskConfig: TextMaskConfig = {
   mask: [
@@ -186,8 +167,8 @@ export class ConfigsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
     this.destroySubject$.next();
     this.destroySubject$.unsubscribe();
   }

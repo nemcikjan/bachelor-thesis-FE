@@ -3,9 +3,10 @@ import { GatewayService } from './gateway.service';
 import { SocketEvent } from '../interfaces/enum/socket.enum';
 import { mergeMap, takeUntil, take, tap, share } from 'rxjs/operators';
 import { of, Observable, Subscription } from 'rxjs';
-import { Actions, ofActionDispatched } from '@ngxs/store';
+import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { Logout } from '../../auth/store/auth.actions';
 import { ToastrService, ToastInjector } from 'ngx-toastr';
+import { PatchData } from 'src/app/store/app.actions';
 
 /**
  * Provides operations over gateway socket stream
@@ -19,7 +20,8 @@ export class SocketProviderService {
   constructor(
     private gatewayService: GatewayService,
     private actions: Actions,
-    private injector: Injector
+    private injector: Injector,
+    private store: Store
   ) {
     // waiting for logout to unsubsribe connectSubscription$ and closeConnection
     this.actions.pipe(ofActionDispatched(Logout)).subscribe(() => {
@@ -37,23 +39,29 @@ export class SocketProviderService {
       .onEvent(SocketEvent.CONNECT)
       .subscribe(() => {
         console.log('ws connected');
-        this.gatewayService
-          .onMessage('update_data')
-          // sending data to store
-          .pipe(
-            mergeMap(message => of(message)),
-            takeUntil(disconnected)
-          )
-          .subscribe(console.log);
-        this.gatewayService
-          .onMessage('server_error')
-          .pipe(
-            tap(error =>
-              this.injector.get(ToastrService).error(error.message, error.title)
-            ),
-            takeUntil(disconnected)
-          )
-          .subscribe();
+        this.connectSubscription$.add(
+          this.gatewayService
+            .onMessage('data')
+            // sending data to store
+            .pipe(
+              mergeMap(data => this.store.dispatch(new PatchData(data))),
+              takeUntil(disconnected)
+            )
+            .subscribe(console.log)
+        );
+        this.connectSubscription$.add(
+          this.gatewayService
+            .onMessage('server_error')
+            .pipe(
+              tap(error =>
+                this.injector
+                  .get(ToastrService)
+                  .error(error.message, error.title)
+              ),
+              takeUntil(disconnected)
+            )
+            .subscribe()
+        );
       });
   }
 
